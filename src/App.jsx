@@ -29,14 +29,12 @@ function App() {
 
   //conditional Rendering 
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-white min-w-screen'>
-      <div className='w-full block'>
-        <Header />
-        <main>
-         <Outlet />
-        </main>
-        <Footer />
-      </div>
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-white">
+      <Header />
+      <main className="flex-grow w-full px-4">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   ) : 
 
