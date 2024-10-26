@@ -7,7 +7,8 @@ import { Button, Container } from '../Components/index'
 import appwriteService from '../Appwrite/config'
 import { getUserDetails } from '../Appwrite/user'
 import authlogo from '../assets/user.jpg'
-import deleteicon from '../assets/trash-2-outline.svg'
+import deleteicon from '../assets/delete.png'
+import editicon from '../assets/edit.png'
 
 function Post() {
 
@@ -110,17 +111,17 @@ function Post() {
                     {isAuthor && (
                         <div>
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button className="mr-3 bg-gray-600 p-2 text-black ">
-                                   edit
+                                <Button className="mr-3 bg-gray-500 p-2 text-black hover:bg-gray-400 ">
+                                   <img src={editicon} alt="edit" className="h-5 w-5" />
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <Button bgColor="bg-red-500 hover:bg-red-400" onClick={deletePost}>
                                 <img src={deleteicon} alt="delete"  className="h-5 w-5" />
                             </Button>
                         </div>
                     )}
                 </div>
-                <div className=" text-left mx-10 text-lg font-sans font-normal">
+                <div className=" text-left mx-10 text-lg font-sans font-normal mt-5">
                     {parse(post.content)}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React , {useCallback , useEffect}from 'react'
+import React , {useCallback , useEffect, useState}from 'react'
 import service from '../../Appwrite/config'
 import {Button , Input, RTE , Select} from "../index"
 import { useNavigate } from 'react-router-dom'
@@ -10,6 +10,7 @@ import { set, useForm } from 'react-hook-form'
 function PostForm({post}) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
+    const [loading , setLoading] = useState(false);
 
     {/* 
         react hook form gives us many functionality like :
@@ -22,7 +23,7 @@ function PostForm({post}) {
     const {register , handleSubmit , watch , setValue , getValues , control} = useForm({
         defaultValues : {
             title: post?.title || "",
-            slug: post?.slug || "",
+            slug: post?.$id || "",
             content: post?.content || "",
             status : post?.status || 'active',
         }
@@ -30,10 +31,11 @@ function PostForm({post}) {
 
     const submit = async (data) =>{
 
+        setLoading(true);
         if(post){
 
             const file  = data.image[0] ? await service.uploadFile(data.image[0]) : null
-
+            console.log("update post: " , post);
             if(file){
                 await service.deleteFile(post.featuredImage);
             }
@@ -43,7 +45,8 @@ function PostForm({post}) {
             })
 
             if(dbPost){
-                navigate(`/post/${dbPost.$id}`) 
+                setLoading(false);
+                navigate(`/post/${dbPost.$id}`);
             }
         }
         else{
@@ -59,6 +62,7 @@ function PostForm({post}) {
                     userid : userData.$id})
 
                 if(dbPost){
+                    setLoading(false);
                     navigate(`/post/${dbPost.$id}`);
                 }
 
@@ -140,7 +144,7 @@ function PostForm({post}) {
             {post && (
                 <div className="w-full mb-4">
                 <img
-                    src={appwriteService.getFilePreview(post.featuredImage)}
+                    src={service.getFilePreview(post.featuredImage)}
                     alt={post.title}
                     className="rounded-lg"
                 />
@@ -153,8 +157,14 @@ function PostForm({post}) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-            <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                {post ? "Update" : "Publish"}
+            <Button type="submit"  className="w-full bg-green-500">
+                {loading?  <div
+                            className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                            role="status">
+                            <span
+                            className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                            >Loading...</span>
+                        </div> : post ? "Update" : "Publish"}
             </Button>
         </div>
     </form>
