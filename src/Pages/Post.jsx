@@ -27,7 +27,6 @@ function Post() {
     useEffect(()=>{
         if (post && post.userid) {
             getUserDetails(post.userid).then((data) => {
-                console.log("Post me user data: " , data);
                 setUsername(data.name);
             }).catch((error) => {
                 console.error("Error fetching user details:", error);
