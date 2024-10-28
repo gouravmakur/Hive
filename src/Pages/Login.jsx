@@ -12,7 +12,7 @@ function Login() {
       </div>
       {/* Photo Section */}
       <div
-        className="w-1/3 bg-cover bg-center bg-green-300 "
+        className="w-1/3 bg-cover bg-center bg-white "
       >
         <img src={bgimage} // Use correct path based on your folder structure
           alt="Background for Login"
