@@ -4,6 +4,8 @@ import { PostCard, Container } from '../Components/index';
 import { useSelector } from 'react-redux';
 import authlogo from '../assets/user.jpg';
 import { getUserDetails } from '../Appwrite/user';
+import { useDispatch } from 'react-redux';
+import { getUserPost } from '../Store/PostSlice';
 
 function AllPosts() {
     const [posts, setPosts] = useState([]);
@@ -11,6 +13,7 @@ function AllPosts() {
     const userData = useSelector((state) => state.auth.userData);
     const [username, setUsername] = useState(null);
     const [postCount, setPostCount] = useState(0);
+    const dispatch = useDispatch();
 
     // Fetch all posts
     useEffect(() => {
@@ -38,6 +41,7 @@ function AllPosts() {
     // Count user's posts
     useEffect(() => {
         const userPosts = posts.filter((post) => post.userid === userData?.$id);
+        dispatch(getUserPost(userPosts));
         setPostCount(userPosts.length);
     }, [posts, userData?.$id]);
 

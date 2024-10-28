@@ -24,10 +24,11 @@ export default function Login() {
                 if (userData) dispatch(authLogin(userData));
                 navigate('/');
             }
+
         } catch (error) {
-            setError(error.message);
-        }
-        finally{
+            setError(error.message || "An error occurred during login.");
+            console.log("The error: ", error);
+        } finally {
             setLoading(false);
         }
     }
@@ -48,7 +49,7 @@ export default function Login() {
                         Sign Up
                     </Link>
                 </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                {error? <p className="text-red-600 my-8 text-center opacity-80">{error}</p> : null}
                 <form onSubmit={handleSubmit(login)} className='mt-8'>
                     <div className='space-y-5'>
                         <Input
@@ -77,7 +78,7 @@ export default function Login() {
                             className='w-full bg-orange-600'
                             disabled={loading}
                         >{loading? <div
-                            className="inline-block h-5 w-6 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                            className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                             role="status">
                             <span
                             className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"

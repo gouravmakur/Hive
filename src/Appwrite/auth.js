@@ -24,6 +24,7 @@ export class AuthService {
             
         } catch (error) {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            throw(error);
         }
     }
 
@@ -35,6 +36,7 @@ export class AuthService {
         } catch (error) {
             
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            throw(error);
         }
     }
 
@@ -47,6 +49,7 @@ export class AuthService {
 
         } catch (error) {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            throw(error);
         }
     }
 
@@ -56,6 +59,7 @@ export class AuthService {
             return await this.account.deleteSessions();
         } catch (error) {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            throw(error);
         }
     }
 }

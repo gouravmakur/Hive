@@ -19,18 +19,21 @@ function Post() {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData)
     const [loading, setLoading] = useState(true);
+    
+    
 
     const isAuthor = post && userData ?  post.userid === userData.$id : false;
 
     useEffect(()=>{
-        if (userData && userData.$id) {
-            getUserDetails(userData.$id).then((data) => {
+        if (post && post.userid) {
+            getUserDetails(post.userid).then((data) => {
+                console.log("Post me user data: " , data);
                 setUsername(data.name);
             }).catch((error) => {
                 console.error("Error fetching user details:", error);
             });
         }
-    },[userData])
+    },[post])
 
     useEffect(() => {
 
@@ -50,6 +53,7 @@ function Post() {
                 
                 if(post){
                     setPost(post);
+                    console.log("Post me post ka data:   ", post);
                     setLoading(false);
                 }
                 else{
