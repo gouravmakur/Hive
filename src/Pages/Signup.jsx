@@ -13,11 +13,11 @@ function Signup() {
     <div
       className="w-1/3 bg-cover bg-center bg-green-300 "
     >
-      <img src={bgimage} // Use correct path based on your folder structure
+      <img src={bgimage} 
         alt="Background for Login"
         className="object-cover w-full h-full"
      />
-      {/* You can add some text or a logo here if needed */}
+
     </div>
   </div>
   )

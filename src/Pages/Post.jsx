@@ -52,7 +52,6 @@ function Post() {
                 
                 if(post){
                     setPost(post);
-                    console.log("Post me post ka data:   ", post);
                     setLoading(false);
                 }
                 else{

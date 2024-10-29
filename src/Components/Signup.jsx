@@ -8,7 +8,7 @@ import { Button, Input } from './index';
 function Signup() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     const signUp = async (data) => {
@@ -17,16 +17,13 @@ function Signup() {
             setLoading(true); // Start loading
 
             const user = await authService.createAccount(data);
-            alert("Account created successfully! Login Using Email and Password");
-            navigate('/login')
+
             if (user) {
-                alert("Account created successfully! Redirecting to login...");
+                alert("Account created successfully! Login Using Email and Password");
                 navigate('/login');
             }
         } catch (error) {
             console.error("Error during account creation:", error);
-
-            // Set a user-friendly error message
             const errorMsg = error?.response?.data?.message || "Failed to create account. Please try again.";
             setError(errorMsg);
         } finally {
@@ -61,33 +58,31 @@ function Signup() {
                             label="Name: "
                             placeholder="Enter your name"
                             type="text"
-                            {...register('name', {
-                                required: true,
-                            })}
+                            {...register('name', { required: "Name is required" })}
                         />
+                        {errors.name && <p className="text-red-600">{errors.name.message}</p>}
 
                         <Input
                             label="Email: "
                             placeholder="Enter your email"
-                            type="email" // Corrected typo here
+                            type="email"
                             {...register("email", {
-                                required: true,
-                                validate: {
-                                    pattern: (value) =>
-                                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                                        "Email address must be a valid address",
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                                    message: "Email address must be valid",
                                 },
                             })}
                         />
+                        {errors.email && <p className="text-red-600">{errors.email.message}</p>}
 
                         <Input
                             label="Password: "
                             placeholder="Enter your password"
                             type="password"
-                            {...register('password', {
-                                required: true,
-                            })}
+                            {...register('password', { required: "Password is required" })}
                         />
+                        {errors.password && <p className="text-red-600">{errors.password.message}</p>}
 
                         <Button
                             type="submit"
@@ -95,11 +90,9 @@ function Signup() {
                             disabled={loading} // Disable button during loading
                         >
                             {loading ? <div
-                                className="inline-block h-5 w-5  animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent"
                                 role="status">
-                                <span
-                                className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                                >Loading...</span>
+                                <span className="sr-only">Loading...</span>
                             </div> : "Create Account"}
                         </Button>
                     </div>

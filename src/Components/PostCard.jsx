@@ -14,7 +14,7 @@ function PostCard({$id, title, featuredImage, userid, $createdAt}) {
     useEffect(() => {
       // Check if userid exists before making the call
       if (userid && userid.length <= 36 && /^[a-zA-Z0-9_]+$/.test(userid)) {
-          console.log("User ID: ", userid);
+          
           getUserDetails(userid).then((data) => {
               if (data && data.name) {
                   setUsername(data.name); 
@@ -33,11 +33,7 @@ function PostCard({$id, title, featuredImage, userid, $createdAt}) {
   }, [userid]);
 
   // useEffect to track userdata change and log it
-  useEffect(() => {
-      if (username) {
-          console.log('Updated userdata:', username);
-      }
-  }, [username]);
+  
 
   //date
   useEffect(() => {
