@@ -1,6 +1,7 @@
 import React from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { Controller } from 'react-hook-form'
+import conf from '../conf/conf'
 
 // This control is passed by the parent component when this component is beign called, so the parent component get the controll over this component
 
@@ -18,7 +19,7 @@ function RTE({name, control, label, defaultValue=""}) {
 
         render={({field : {onChange , value}}) => (
             <Editor
-                apiKey='om9ym7p7nur5gbrel7rltxtg13wg2n4w633wp60e2ommk7wp'
+                apiKey={conf.rte_ApiKey}
                 value={value}
                 init={
                 {
